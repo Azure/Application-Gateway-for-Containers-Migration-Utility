@@ -1,0 +1,27 @@
+version: "2"
+linters:
+  enable:
+    - goconst
+    - gocyclo
+    - gosec
+    - misspell
+    - revive
+    - whitespace
+  settings:
+    errcheck:
+      check-type-assertions: true
+  exclusions:
+    rules:
+      - linters:
+          - gosec
+        text: integer overflow conversion
+      - linters:
+          - staticcheck
+        text: could remove embedded field
+      - linters:
+          - revive
+        text: comment
+formatters:
+  enable:
+    - gofmt
+    - goimports

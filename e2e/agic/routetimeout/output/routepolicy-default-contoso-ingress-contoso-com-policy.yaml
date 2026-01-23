@@ -1,0 +1,14 @@
+apiVersion: alb.networking.azure.io/v1
+kind: RoutePolicy
+metadata:
+  name: contoso-ingress-contoso-com-policy
+  namespace: default
+spec:
+  default:
+    timeouts:
+      routeTimeout: 22m17s
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: contoso-ingress-contoso-com
+    namespace: default

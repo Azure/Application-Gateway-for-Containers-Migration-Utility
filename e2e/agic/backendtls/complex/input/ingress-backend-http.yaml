@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-http
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+spec:
+  rules:
+    - host: contoso.com
+      http:
+        paths:
+          - path: /http-backend/
+            backend:
+              service:
+                name: contoso-service
+                port:
+                  number: 80
+            pathType: Exact
+    - host: fabrikam.com
+      http:
+        paths:
+          - path: /http-backend/
+            backend:
+              service:
+                name: fabrikam-service
+                port:
+                  number: 80
+            pathType: Exact

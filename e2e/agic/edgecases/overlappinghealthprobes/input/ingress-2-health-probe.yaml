@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: health-probe-ingress-2
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/health-probe-hostname: "contoso-2.com"
+    appgw.ingress.kubernetes.io/health-probe-interval: "200"
+    appgw.ingress.kubernetes.io/health-probe-path: "/health-path-2"
+    appgw.ingress.kubernetes.io/health-probe-port: "3002"
+    appgw.ingress.kubernetes.io/health-probe-status-codes: "200-299,302"
+    appgw.ingress.kubernetes.io/health-probe-timeout: "200"
+    appgw.ingress.kubernetes.io/health-probe-unhealthy-threshold: "2"
+spec:
+  rules:
+    - host: health-probe
+      http:
+        paths:
+          - path: /path-2/
+            backend:
+              service:
+                name: contoso-service
+                port:
+                  number: 80
+            pathType: Exact
