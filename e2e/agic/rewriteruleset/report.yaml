@@ -1,0 +1,35 @@
+metadata:
+  generatedAt: 2025-11-18T19:03:58.437718279Z
+  toolVersion: 1.0.0-dev
+  agicResourcesSource: files
+  agcByoResourceID: /subscriptions/11111111-1111-1111-bbbb-bbbbbbbbbbbb/resourceGroups/onebox-rg/providers/Microsoft.ServiceNetworking/trafficControllers/test-tc
+inputAGICResources:
+  ingresses:
+  - namespace: default
+    name: contoso-ingress
+    migratedResources:
+      httpRoutes:
+      - namespace: default
+        name: contoso-ingress-contoso-com
+    annotations:
+      warnings:
+      - annotation: appgw.ingress.kubernetes.io/rewrite-rule-set-custom-resource=rule-set
+        issues:
+         - description: URL reroute on rewrite rules is not supported in Application
+            Gateway for Containers.
+           recommendation: Path rewrites will be applied but requests will not be rerouted
+            to a different backend. Please review the generated HTTPRoutes to ensure
+            they meet your requirements.
+
+outputAGCResourceSummary:
+  gateway:
+    namespace: default
+    name: alb-gateway
+  httpRoutes:
+  - namespace: default
+    name: contoso-ingress-contoso-com
+  healthCheckPolicies: []
+  routePolicies: []
+  webApplicationFirewallPolicies: []
+  frontendTLSPolicies: []
+  backendTLSPolicies: []

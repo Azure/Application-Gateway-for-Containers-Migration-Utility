@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: contoso-ingress
+  namespace: default
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/hostname-extension: example.com, example2.com
+spec:
+  rules:
+    - host: contoso.com
+      http:
+        paths:
+          - path: /
+            backend:
+              service:
+                name: contoso-service
+                port:
+                  number: 80
+            pathType: Exact

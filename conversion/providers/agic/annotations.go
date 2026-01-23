@@ -1,0 +1,31 @@
+package agic
+
+const (
+	// AGIC Annotations
+	AnnotationAppGwSSLCertificate             = "appgw.ingress.kubernetes.io/appgw-ssl-certificate"
+	AnnotationAppGwSSLProfile                 = "appgw.ingress.kubernetes.io/appgw-ssl-profile"
+	AnnotationAppGwTrustedRootCertificate     = "appgw.ingress.kubernetes.io/appgw-trusted-root-certificate"
+	AnnotationBackendHostname                 = "appgw.ingress.kubernetes.io/backend-hostname"
+	AnnotationBackendPathPrefix               = "appgw.ingress.kubernetes.io/backend-path-prefix"
+	AnnotationBackendProtocol                 = "appgw.ingress.kubernetes.io/backend-protocol"
+	AnnotationConnectionDraining              = "appgw.ingress.kubernetes.io/connection-draining"
+	AnnotationConnectionDrainingTimeout       = "appgw.ingress.kubernetes.io/connection-draining-timeout"
+	AnnotationCookieBasedAffinity             = "appgw.ingress.kubernetes.io/cookie-based-affinity"
+	AnnotationCookieBasedAffinityDistinctName = "appgw.ingress.kubernetes.io/cookie-based-affinity-distinct-name"
+	AnnotationHealthProbeHostname             = "appgw.ingress.kubernetes.io/health-probe-hostname"
+	AnnotationHealthProbeInterval             = "appgw.ingress.kubernetes.io/health-probe-interval"
+	AnnotationHealthProbePath                 = "appgw.ingress.kubernetes.io/health-probe-path"
+	AnnotationHealthProbePort                 = "appgw.ingress.kubernetes.io/health-probe-port"
+	AnnotationHealthProbeStatusCode           = "appgw.ingress.kubernetes.io/health-probe-status-codes"
+	AnnotationHealthProbeTimeout              = "appgw.ingress.kubernetes.io/health-probe-timeout"
+	AnnotationHealthProbeUnhealthyThreshold   = "appgw.ingress.kubernetes.io/health-probe-unhealthy-threshold"
+	AnnotationHostnameExtension               = "appgw.ingress.kubernetes.io/hostname-extension"
+	AnnotationOverrideFrontendPort            = "appgw.ingress.kubernetes.io/override-frontend-port"
+	AnnotationRequestTimeout                  = "appgw.ingress.kubernetes.io/request-timeout"
+	AnnotationRewriteRuleSet                  = "appgw.ingress.kubernetes.io/rewrite-rule-set"
+	AnnotationRewriteRuleSetCustomResource    = "appgw.ingress.kubernetes.io/rewrite-rule-set-custom-resource"
+	AnnotationSSLRedirect                     = "appgw.ingress.kubernetes.io/ssl-redirect"
+	AnnotationUsePrivateIP                    = "appgw.ingress.kubernetes.io/use-private-ip"
+	AnnotationWAFPolicyForPath                = "appgw.ingress.kubernetes.io/waf-policy-for-path"
+	AnnotationRulePriority                    = "appgw.ingress.kubernetes.io/rule-priority"
+)

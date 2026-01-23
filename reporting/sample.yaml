@@ -1,0 +1,74 @@
+# Migration Report
+metadata:
+    generatedAt: "2026-01-01T12:00:00Z"
+    toolVersion: "1.2.3"
+    agicResourceSource: files # or cluster
+    agcBYOResourceID: <not supplied>
+
+inputAGICResources:
+    ingresses:  # count: 1
+        - namespace: default
+          name: contoso-ingress
+          destinationResources:
+            httpRoutes:
+                - namespace: default
+                  name: contoso-ingress-contoso-com
+            healthCheckPolicies:
+              - namespace: default
+                name: contoso-ingress-health-check
+            routePolicies: []
+            backendTLSPolicies: []
+            frontendTLSPolicies: []
+          migratedAnnotations:
+            appgw.ingress.kubernetes.io/backend-hostname: Completed
+            appgw.ingress.kubernetes.io/backend-path-prefix: Completed
+          annotations:
+            appgw.ingress.kubernetes.io/some-unsupported-feature: NotSupported  # include a reference?
+            appgw.ingress.kubernetes.io/another-unsupported-feature: NotSupported
+            appgw.ingress.kubernetes.io/appgw-ssl-certificate: NotSupported
+          notes: see Issues for detailed errors and recommendations
+          result: CompletedWithWarnings
+    prohibitedTargets: []
+    azureApplicationGatewayRewrites: # count: 1
+        - namespace: default
+          name: rewrite-policy-1
+          destinationResources:
+              httpRoutes:
+                  - namespace: default
+                    name: contoso-ingress-contoso-com
+          notes: see Issues for detailed errors and recommendations
+          result: CompletedWithErrors
+
+outputApplicationGatewayForContainersResources:
+    deploymentType: managed by ALB
+    applicationLoadBalancers: # count: 1
+      - name: contoso-agc
+        resourceGroup: contoso-rg
+    gateways: # count: 1
+      - namespace: default
+        name: contoso-gateway
+        listeners:
+          - http
+          - https
+    httpRoutes: # count: 1
+        - namespace: default
+          name: contoso-ingress-contoso-com
+    healthCheckPolicies: # count: 1
+        - namespace: default
+          name: contoso-ingress-health-check
+    routePolicies: [] # count: 0
+    backendTLSPolicies: [] # count: 0
+    frontendTLSPolicies: [] # count: 0
+issues: # count: 3
+  - impactedComponents:
+      - AzureApplicationGatewayRewrite default/rewrite-policy-1
+    message: Conditions on AzureApplicationGatewayRewrites are not supported in the migration - filters have been supplied on the generated HTTPRoute without conditions.
+    recommendation: Review filters on the HTTPRoute and make changes to the route as necessary.
+  - impactedComponents:
+      - Query string rewrites
+    message: Not supported in Application Gateway for Containers.
+    recommendation: Use alternative path-based routing, or make changes to the backend as appropriate.
+  - impactedComponents:
+      - Ingress default/default appgw.ingress.kubernetes.io/appgw-ssl-certificate annotation
+    message: Certificates supplied directly to AppGW are not supported in the migration.
+    recommendation: Re-create TLS certificates as Kubernetes Secrets and reference them in Gateway TLS configurations.

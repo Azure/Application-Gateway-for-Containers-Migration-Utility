@@ -1,0 +1,14 @@
+apiVersion: alb.networking.azure.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: contoso-service-policy
+  namespace: default
+spec:
+  default:
+    ports:
+    - port: 80
+  targetRef:
+    group: ""
+    kind: Service
+    name: contoso-service
+    namespace: default

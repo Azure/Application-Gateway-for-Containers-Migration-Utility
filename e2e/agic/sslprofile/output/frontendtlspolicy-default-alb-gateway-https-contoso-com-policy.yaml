@@ -1,0 +1,16 @@
+apiVersion: alb.networking.azure.io/v1
+kind: FrontendTLSPolicy
+metadata:
+  name: alb-gateway-https-contoso-com-policy
+  namespace: default
+spec:
+  default:
+    policyType:
+      name: 2023-06
+      type: predefined
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: Gateway
+    name: alb-gateway
+    sectionNames:
+    - https-contoso-com

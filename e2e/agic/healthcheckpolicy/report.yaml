@@ -1,0 +1,39 @@
+metadata:
+  generatedAt: 2025-11-13T22:48:40.787026597Z
+  toolVersion: 1.0.0-dev
+  agicResourcesSource: files
+  agcByoResourceID: /subscriptions/11111111-1111-1111-bbbb-bbbbbbbbbbbb/resourceGroups/onebox-rg/providers/Microsoft.ServiceNetworking/trafficControllers/test-tc
+inputAGICResources:
+  ingresses:
+  - namespace: default
+    name: contoso-ingress
+    migratedResources:
+      httpRoutes:
+      - namespace: default
+        name: contoso-ingress-contoso-com
+      healthCheckPolicies:
+      - namespace: default
+        name: contoso-service-policy
+    annotations:
+      completed:
+      - annotation: appgw.ingress.kubernetes.io/health-probe-hostname=contoso.com
+      - annotation: appgw.ingress.kubernetes.io/health-probe-interval=30
+      - annotation: appgw.ingress.kubernetes.io/health-probe-path=/health
+      - annotation: appgw.ingress.kubernetes.io/health-probe-port=3000
+      - annotation: appgw.ingress.kubernetes.io/health-probe-status-codes=200-299,301,302
+      - annotation: appgw.ingress.kubernetes.io/health-probe-timeout=5
+      - annotation: appgw.ingress.kubernetes.io/health-probe-unhealthy-threshold=3
+outputAGCResourceSummary:
+  gateway:
+    namespace: default
+    name: alb-gateway
+  httpRoutes:
+  - namespace: default
+    name: contoso-ingress-contoso-com
+  healthCheckPolicies:
+  - namespace: default
+    name: contoso-service-policy
+  routePolicies: []
+  webApplicationFirewallPolicies: []
+  frontendTLSPolicies: []
+  backendTLSPolicies: []

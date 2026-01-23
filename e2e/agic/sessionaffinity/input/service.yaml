@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: contoso-service
+  name: contoso-service
+  namespace: test-customer-system
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: contoso-service
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: contoso-service
+  name: contoso-service
+  namespace: test-customer-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contoso-service
+  template:
+    metadata:
+      labels:
+        app: contoso-service
+    spec:
+      containers:
+      - image: trafficcontrollertestimages.azurecr.io/echoserver:v20220815-e21d1a4
+        name: echo
+        ports:
+          - containerPort: 3000
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace

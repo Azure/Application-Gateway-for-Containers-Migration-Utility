@@ -1,0 +1,14 @@
+apiVersion: alb.networking.azure.io/v1
+kind: BackendTLSPolicy
+metadata:
+  name: fabrikam-service-policy
+  namespace: default
+spec:
+  default:
+    ports:
+    - port: 443
+  targetRef:
+    group: ""
+    kind: Service
+    name: fabrikam-service
+    namespace: default

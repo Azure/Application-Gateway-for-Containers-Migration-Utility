@@ -1,0 +1,27 @@
+apiVersion: alb.networking.azure.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: contoso-service-policy
+  namespace: default
+spec:
+  default:
+    http:
+      host: contoso.com
+      match:
+        statusCodes:
+        - start: 200
+          end: 299
+        - start: 301
+          end: 301
+        - start: 302
+          end: 302
+      path: /health
+    interval: 30s
+    port: 3000
+    timeout: 5s
+    unhealthyThreshold: 3
+  targetRef:
+    group: ""
+    kind: Service
+    name: contoso-service
+    namespace: default

@@ -1,0 +1,40 @@
+apiVersion: appgw.ingress.azure.io/v1beta1
+kind: AzureApplicationGatewayRewrite
+metadata:
+  name: rule-set
+  namespace: default
+spec:
+  rewriteRules:
+  - name: test-rewrite-rule-1
+    ruleSequence: 1
+    actions:
+      requestHeaderConfigurations:
+      - actionType: set
+        headerName: request-set-me-1
+        headerValue: request-set-me-val-1
+      - actionType: delete
+        headerName: request-delete-me-1
+      responseHeaderConfigurations:
+      - actionType: set
+        headerName: response-set-me-1
+        headerValue: response-set-me-val-1
+      - actionType: delete
+        headerName: response-delete-me-1
+      urlConfiguration:
+        modifiedPath: "/api/"
+        reroute: true
+  - name: test-rewrite-rule-2
+    ruleSequence: 1
+    actions:
+      requestHeaderConfigurations:
+        - actionType: set
+          headerName: request-set-me-2
+          headerValue: request-set-me-val-2
+        - actionType: delete
+          headerName: request-delete-me-2
+      responseHeaderConfigurations:
+        - actionType: set
+          headerName: response-set-me-2
+          headerValue: response-set-me-val-2
+        - actionType: delete
+          headerName: response-delete-me-2

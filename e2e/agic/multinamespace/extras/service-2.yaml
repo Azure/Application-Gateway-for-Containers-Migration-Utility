@@ -1,0 +1,54 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: second-namespace
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: contoso-2-service
+  name: contoso-2-service
+  namespace: second-namespace
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: contoso-2-service
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: contoso-2-service
+  name: contoso-2-service
+  namespace: second-namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: contoso-2-service
+  template:
+    metadata:
+      labels:
+        app: contoso-2-service
+    spec:
+      containers:
+      - image: trafficcontrollertestimages.azurecr.io/echoserver:v20220815-e21d1a4
+        name: echo
+        ports:
+          - containerPort: 3000
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace

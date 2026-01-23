@@ -1,0 +1,58 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  annotations:
+    alb.networking.azure.io/alb-id: /subscriptions/11111111-1111-1111-bbbb-bbbbbbbbbbbb/resourceGroups/onebox-rg/providers/Microsoft.ServiceNetworking/trafficControllers/test-tc
+  name: alb-gateway
+  namespace: default
+spec:
+  gatewayClassName: azure-alb-external
+  listeners:
+  - allowedRoutes:
+      namespaces:
+        from: All
+    hostname: contoso.com
+    name: https-contoso-com
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: contoso-secret
+  - allowedRoutes:
+      namespaces:
+        from: All
+    hostname: fabrikam.com
+    name: https-fabrikam-com
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: fabrikam-secret
+  - allowedRoutes:
+      namespaces:
+        from: All
+    hostname: sub-2.fabrikam.com
+    name: https-sub-2-fabrikam-com
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: sub-fabrikam-secret
+  - allowedRoutes:
+      namespaces:
+        from: All
+    hostname: sub.fabrikam.com
+    name: https-sub-fabrikam-com
+    port: 443
+    protocol: HTTPS
+    tls:
+      certificateRefs:
+      - group: ""
+        kind: Secret
+        name: sub-fabrikam-secret

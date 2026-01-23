@@ -1,0 +1,45 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: contoso-ingress-contoso-com
+  namespace: default
+spec:
+  hostnames:
+  - contoso.com
+  parentRefs:
+  - name: alb-gateway
+    sectionName: http
+  rules:
+  - backendRefs:
+    - name: contoso-service
+      port: 80
+    filters:
+    - requestHeaderModifier:
+        remove:
+        - request-delete-me-1
+        - request-delete-me-2
+        set:
+        - name: request-set-me-1
+          value: request-set-me-val-1
+        - name: request-set-me-2
+          value: request-set-me-val-2
+      type: RequestHeaderModifier
+    - responseHeaderModifier:
+        remove:
+        - response-delete-me-1
+        - response-delete-me-2
+        set:
+        - name: response-set-me-1
+          value: response-set-me-val-1
+        - name: response-set-me-2
+          value: response-set-me-val-2
+      type: ResponseHeaderModifier
+    - type: URLRewrite
+      urlRewrite:
+        path:
+          replaceFullPath: /api/
+          type: ReplaceFullPath
+    matches:
+    - path:
+        type: Exact
+        value: /
